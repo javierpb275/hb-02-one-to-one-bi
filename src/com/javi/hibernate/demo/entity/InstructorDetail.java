@@ -30,7 +30,9 @@ public class InstructorDetail {
 	// add new field for instructor (also add getter/setters)
 	
 	// add @OneToOne annotation (this will give us bidirectional relationship between Instructor and InstructorDetail)
-	@OneToOne(mappedBy="instructorDetail", cascade=CascadeType.ALL)//Refers to "instructorDetail" property in "Instructor" class. Cascade all operations to the associated instructor
+	@OneToOne(mappedBy="instructorDetail", 
+			cascade= {CascadeType.DETACH, CascadeType.MERGE, //update cascade type so we are using all cascade types except for REMOVE (meaning delete). So we're not cascading any delete operations to the instructor. That's why the instructor stay in the database
+					CascadeType.PERSIST, CascadeType.REFRESH})//Refers to "instructorDetail" property in "Instructor" class. CascadeType.ALL: Cascade all operations to the associated instructor
 	private Instructor instructor;
 
 	
