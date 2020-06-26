@@ -30,14 +30,15 @@ public class GetInstructorDetailDemo {
 			// get the instructor detail object
 			int theId = 2;
 			InstructorDetail tempInstructorDetail =
-					session.get(InstructorDetail.class, theId);
+					session.get(InstructorDetail.class, theId);//Returns null if not found
 			
 			// print the instructor detail
 			System.out.println("tempInstructorDetail: " + tempInstructorDetail);
 			
 			
 			// print the associated instructor
-			System.out.println("the associated instructor: " + tempInstructorDetail.getInstructor());
+			System.out.println("the associated instructor: " + 
+								tempInstructorDetail.getInstructor());//NullPointerException
 			
 			// commit transaction
 			session.getTransaction().commit();
@@ -46,8 +47,18 @@ public class GetInstructorDetailDemo {
 			
 		}
 		
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		
 		finally {
+			
+			//handle connection leak issue by doing:
+			session.close();
+			
+			
 			factory.close();
+			
 		}
 
 	}
